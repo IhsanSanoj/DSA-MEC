@@ -1,0 +1,60 @@
+#include <stdio.h>
+#define MAX 5  
+
+int stack[MAX]={9,7,8,5,6};
+int stack2[MAX];
+
+int top = MAX-1;
+int top2=-1;
+
+
+int push(int value) {
+    if (top2 != MAX - 1) {
+        stack2[++top2] = value;
+        return 0;
+    } else {
+    return -1;
+        
+       
+    }
+}
+
+
+int pop() {
+    int item;
+    if (top != -1) {
+        item = stack[top--];
+        return item;
+    } 
+    else{
+    return -1;
+}}
+
+
+
+
+
+int main(){
+int temp;
+
+
+for (int i=0;i<MAX;i++){
+	for(int j=0;j<MAX-i-1;j++){
+		if(stack[j]>stack[j+1]){
+			temp=stack[j];
+			stack[j]=stack[j+1];
+			stack[j+1]=temp;
+			}
+			}
+			}
+for (int i=0;i<MAX;i++){
+    int num=pop();
+    if (num!=-1){
+    push(num);
+    }}
+for (int i=0;i<MAX;i++){
+	
+	printf("%d",stack2[i]);
+
+    }
+    return 0;}
