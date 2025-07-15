@@ -1,9 +1,10 @@
 #include <stdio.h>
-#define MAX 3 
+#define MAX 3  // Changed to 3 for demonstration purposes
 
 int stack[MAX];
 int top = -1;
 
+// Function to push an element into the stack
 void push(int value) {
     if (top == MAX - 1) {
         printf("Stack Overflow! Cannot push %d\n", value);
@@ -13,7 +14,7 @@ void push(int value) {
     }
 }
 
-
+// Function to pop an element from the stack
 void pop() {
     int item;
     if (top == -1) {
@@ -24,6 +25,7 @@ void pop() {
     }
 }
 
+// Function to check if stack is full
 int isfull() {
     if (top == MAX - 1) {
         return 1;
@@ -32,7 +34,7 @@ int isfull() {
     }
 }
 
-
+// Function to peek the top element of the stack
 void peek() {
     int peekitem;
     if (top == -1) {
@@ -44,7 +46,7 @@ void peek() {
 }
 
 int main() {
-    
+    // Example usage
     push(10);
     push(20);
     push(30);
