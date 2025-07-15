@@ -1,0 +1,171 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX 100
+
+char stack[MAX];
+int top = -1;
+
+// Push character onto stack
+void push(char ch) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow!\n");
+    } else {
+        stack[++top] = ch;
+    }
+}
+#include <stdio.h>
+#include <string.h>
+#define MAX 100
+
+char stack[MAX];
+int top = -1;
+
+// Push character onto stack
+void push(char ch) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow!\n");
+    } else {
+        stack[++top] = ch;
+    }
+}
+
+// Pop character from stack
+char pop() {
+    if (top == -1) {
+        printf("Stack Underflow!\n");
+        return '\0';  // Return null character if stack empty
+    } else {
+        return stack[top--];
+    }
+}
+
+int main() {
+    char str[MAX];
+    int length, i;
+    
+    printf("Enter a string: ");
+    fgets(str, MAX, stdin);
+
+    // Remove newline character if present
+    length = strlen(str);
+    if (str[length - 1] == '\n') {
+        str[length - 1] = '\0';
+        length--;
+    }
+#include <stdio.h>
+#include <string.h>
+#define MAX 100
+
+char stack[MAX];
+int top = -1;
+
+// Push character onto stack
+void push(char ch) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow!\n");
+    } else {
+        stack[++top] = ch;
+    }
+}
+
+// Pop character from stack
+char pop() {
+    if (top == -1) {
+        printf("Stack Underflow!\n");
+        return '\0';  // Return null character if stack empty
+    } else {
+        return stack[top--];
+    }
+}
+
+int main() {
+    char str[MAX];
+    int length, i;
+    
+    printf("Enter a string: ");
+    fgets(str, MAX, stdin);
+
+    // Remove newline character if present
+    length = strlen(str);
+    if (str[length - 1] == '\n') {
+        str[length - 1] = '\0';
+        length--;
+    }
+
+    // Push all characters of string into stack
+    for (i = 0; i < length; i++) {
+        push(str[i]);
+    }
+
+    printf("Reversed string: ");
+
+    // Pop characters from stack and print
+    for (i = 0; i < length; i++) {
+        printf("%c", pop());
+    }
+    printf("\n");
+
+    return 0;
+
+}
+
+
+    // Push all characters of string into stack
+    for (i = 0; i < length; i++) {
+        push(str[i]);
+    }
+
+    printf("Reversed string: ");
+
+    // Pop characters from stack and print
+    for (i = 0; i < length; i++) {
+        printf("%c", pop());
+    }
+    printf("\n");
+
+    return 0;
+
+}
+
+
+// Pop character from stack
+char pop() {
+    if (top == -1) {
+        printf("Stack Underflow!\n");
+        return '\0';  // Return null character if stack empty
+    } else {
+        return stack[top--];
+    }
+}
+
+int main() {
+    char str[MAX];
+    int length, i;
+    
+    printf("Enter a string: ");
+    fgets(str, MAX, stdin);
+
+    // Remove newline character if present
+    length = strlen(str);
+    if (str[length - 1] == '\n') {
+        str[length - 1] = '\0';
+        length--;
+    }
+
+    // Push all characters of string into stack
+    for (i = 0; i < length; i++) {
+        push(str[i]);
+    }
+
+    printf("Reversed string: ");
+
+    // Pop characters from stack and print
+    for (i = 0; i < length; i++) {
+        printf("%c", pop());
+    }
+    printf("\n");
+
+    return 0;
+
+}
+
