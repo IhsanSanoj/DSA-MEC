@@ -1,0 +1,60 @@
+#define n 10
+#include <stdio.h>
+int queue[n];
+int front=-1,rear=-1;
+int isempty(){
+     return front==-1;
+}
+int isfull(){
+return (rear+1)%n==front;
+}
+
+void insertfr(int item){
+    if(isfull()){
+        printf("Queue is full\n");
+        return;
+    }
+    if(isempty()){
+        front = rear = 0;
+    }
+    else if(front == 0){
+        front = n - 1;
+    } else {
+        front--;
+    }
+    queue[front] = item;
+    printf("Inserted %d at front\n", item);
+}
+void delfr(){
+    if(isempty()){
+        printf("Queue is empty \n");
+        return;
+    }
+    printf("deleted %d from front \n",queue[front]);
+    if(front==rear){
+        front=rear=-1;
+    }
+    else{
+        front=(front+1) % n;
+    }
+}
+void insertrr(int item){
+    if(isfull){
+        printf("Queue is full \n");
+        return;
+    }
+    rear=(rear+1) % n;
+    queue[rear]=item;
+    printf("Inserted %d at rear\n", item);
+}
+void delrr(){
+    if(isempty()){
+        printf("Queue is empty \n");
+        return;
+    }
+    printf("deleted %d from rear \n",queue[front]);
+    if(rear==0){
+        rear=n-1;
+    }
+    
+}
