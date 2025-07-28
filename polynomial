@@ -1,0 +1,81 @@
+#include <stdio.h>
+#define MS 5
+
+typedef struct {
+    float coeff;
+    int exp;
+} poly;
+
+int main() {
+    poly a[MS], b[MS];
+    poly c[2*MS];
+    int na, nb;
+
+    // Initialize polynomial A: 5x^2 + 4x + 2
+    na = 3;
+    a[0].coeff = 5; a[0].exp = 2;
+    a[1].coeff = 4; a[1].exp = 1;
+    a[2].coeff = 2; a[2].exp = 0;
+
+    // Initialize polynomial B: 3x^3 + 7x^2
+    nb = 2;
+    b[0].coeff=3;b[0].exp=3;
+    b[1].coeff=7;b[1].exp=2;
+    int i = 0, j = 0, k = 0;
+    while (i < na && j < nb) {
+        if (a[i].exp > b[j].exp) {
+            c[k] = a[i];
+            i++;
+            k++;
+        }
+        else if(a[i].exp < b[j].exp){
+            c[k] = b[j];
+            j++;
+            k++;
+        }
+        else{
+            c[k].exp = a[i].exp;
+            float coef = a[i].coeff + b[j].coeff;
+            c[k].coeff = coef;
+            i++;
+            k++;
+            j++;
+            }
+
+        }
+        while(i<na){
+            c[k]=a[i];
+            k++;
+            i++;
+
+        }
+         while(j<nb){
+            c[k]=b[j];
+            k++;
+            j++;
+            
+        }
+printf("1st polynomial  ");
+for (int l = 0; l < na; l++) {
+    printf("%.1fx^%d", a[l].coeff, a[l].exp);
+    if (l < na - 1) printf(" + ");
+}
+printf("\n");
+
+printf("2nd polynomial  ");
+for (int l = 0; l < nb; l++) {
+    printf("%.1fx^%d", b[l].coeff, b[l].exp);
+    if (l < nb - 1) printf(" + ");
+}
+printf("\n");
+
+printf("sum polynomial  ");
+for(int l=0;l<k;l++){
+    printf("%.1fx^%d",c[l].coeff,c[l].exp);
+    if(l<k-1){
+        printf("+");}
+}
+printf("\n");
+
+
+}
