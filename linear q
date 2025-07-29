@@ -46,13 +46,7 @@ int main() {
         printf("4: Exit\n");
         printf("Choice: ");
         scanf("%d", &ch);
-        if (
-        
-        )
-        {
-            /* code */
-        }
-        
+       
 
         switch (ch) {
             case 1:
