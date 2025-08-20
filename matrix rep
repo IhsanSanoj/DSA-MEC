@@ -8,10 +8,10 @@ int value;
 int main() {
 // Original 4x5 matrix
 int matrix[4][5] = {
-{0, 0, 0, 5, 0},
+{0, 7, 0, 5, 0},
 {0, 8, 0, 0, 0},
 {0, 0, 6, 0, 0},
-{1, 0, 0, 0, 4}
+{1, 2, 0, 0, 4}
 };
 
 struct Sparse sparse[20]; // Enough space
