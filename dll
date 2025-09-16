@@ -145,9 +145,10 @@ void traverseForward() {
     struct Node* temp = head;
     printf("List (forward): ");
     while (temp != NULL) {
-        printf("%d ", temp->data);
+        printf("%d-->", temp->data);
         temp = temp->next;
     }
+    printf("NULL");
     printf("\n");
 }
 
@@ -162,9 +163,10 @@ void traverseBackward() {
         temp = temp->next;
     printf("List (backward): ");
     while (temp != NULL) {
-        printf("%d ", temp->data);
+        printf("%d-->", temp->data);
         temp = temp->prev;
     }
+    printf("NULL");
     printf("\n");
 }
 
