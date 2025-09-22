@@ -1,233 +1,92 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define the Node structure
+// Node structure
 struct Node {
     int data;
     struct Node* next;
 };
 
-// Pointer to the last node (instead of head in SLL)
-struct Node* last = NULL;
+struct Node *front = NULL, *rear = NULL;
 
-// Function to insert at end
-void insertAtEnd(int value) {
+// Enqueue function
+void enqueue(int value) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = value;
+    newNode->next = NULL;
 
-    if (last == NULL) { // first node
-        newNode->next = newNode;
-        last = newNode;
+    if (front == NULL) {
+        front = rear = newNode;
+        rear->next = front; // Circular link
     } else {
-        newNode->next = last->next;
-        last->next = newNode;
-        last = newNode;
+        rear->next = newNode;
+        rear = newNode;
+        rear->next = front; // Keep it circular
     }
-    printf("Inserted %d at the end\n", value);
+    printf("Inserted %d\n", value);
 }
 
-// Function to insert at beginning
-void insertAtBeginning(int value) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = value;
-
-    if (last == NULL) {
-        newNode->next = newNode;
-        last = newNode;
-    } else {
-        newNode->next = last->next;
-        last->next = newNode;
-    }
-    printf("Inserted %d at the beginning\n", value);
-}
-
-// Function to insert at a given position
-void insertAtPosition(int value, int position) {
-    if (last == NULL && position > 1) {
-        printf("Invalid position! List is empty.\n");
+// Dequeue function
+void dequeue() {
+    if (front == NULL) {
+        printf("Queue is Empty\n");
         return;
     }
 
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = value;
-
-    if (position == 1) {
-        if (last == NULL) {
-            newNode->next = newNode;
-            last = newNode;
-        } else {
-            newNode->next = last->next;
-            last->next = newNode;
-        }
-        printf("Inserted %d at position %d\n", value, position);
-        return;
-    }
-
-    struct Node* temp = last->next; // head
-    for (int i = 1; i < position - 1; i++) {
-        temp = temp->next;
-        if (temp == last->next) { // looped back
-            printf("Invalid position!\n");
-            free(newNode);
-            return;
-        }
-    }
-
-    newNode->next = temp->next;
-    temp->next = newNode;
-    if (temp == last) last = newNode; // inserted at end
-    printf("Inserted %d at position %d\n", value, position);
-}
-
-// Function to delete at beginning
-void deleteAtBeginning() {
-    if (last == NULL) {
-        printf("List is empty!\n");
-        return;
-    }
-
-    struct Node* temp = last->next;
-    if (last == last->next) { // only one node
-        free(last);
-        last = NULL;
+    if (front == rear) { // Only one node
+        printf("Deleted %d\n", front->data);
+        free(front);
+        front = rear = NULL;
     } else {
-        last->next = temp->next;
+        struct Node* temp = front;
+        printf("Deleted %d\n", temp->data);
+        front = front->next;
+        rear->next = front;
         free(temp);
     }
-    printf("Deleted node at beginning\n");
 }
 
-// Function to delete at end
-void deleteAtEnd() {
-    if (last == NULL) {
-        printf("List is empty!\n");
-        return;
-    }
-
-    if (last == last->next) { // only one node
-        free(last);
-        last = NULL;
-    } else {
-        struct Node* temp = last->next;
-        while (temp->next != last) {
-            temp = temp->next;
-        }
-        temp->next = last->next;
-        free(last);
-        last = temp;
-    }
-    printf("Deleted node at end\n");
-}
-
-// Function to delete at a given position
-void deleteAtPosition(int position) {
-    if (last == NULL) {
-        printf("List is empty!\n");
-        return;
-    }
-
-    struct Node* temp = last->next;
-
-    if (position == 1) {
-        if (last == last->next) {
-            free(last);
-            last = NULL;
-        } else {
-            last->next = temp->next;
-            free(temp);
-        }
-        printf("Deleted node at position 1\n");
-        return;
-    }
-
-    struct Node* prev = NULL;
-    for (int i = 1; i < position; i++) {
-        prev = temp;
-        temp = temp->next;
-        if (temp == last->next) { // looped back
-            printf("Invalid position!\n");
-            return;
-        }
-    }
-
-    prev->next = temp->next;
-    if (temp == last) last = prev; // if deleting last node
-    free(temp);
-    printf("Deleted node at position %d\n", position);
-}
-
-// Function to display the list
+// Display function
 void display() {
-    if (last == NULL) {
-        printf("List is empty!\n");
+    if (front == NULL) {
+        printf("Queue is Empty\n");
         return;
     }
 
-    struct Node* temp = last->next; // head
-    printf("Circular Linked List: ");
+    struct Node* temp = front;
+    printf("Queue Elements: ");
     do {
-        printf("%d -> ", temp->data);
+        printf("%d ", temp->data);
         temp = temp->next;
-    } while (temp != last->next);
-    printf("(back to head)\n");
+    } while (temp != front);
+    printf("\n");
 }
 
 // Main function
 int main() {
-    int choice, value, position;
-
+    int choice, value;
     while (1) {
-        printf("\nCircular Linked List Operations\n");
-        printf("1. Insert at End\n");
-        printf("2. Insert at Beginning\n");
-        printf("3. Insert at Position\n");
-        printf("4. Delete at Beginning\n");
-        printf("5. Delete at End\n");
-        printf("6. Delete at Position\n");
-        printf("7. Display List\n");
-        printf("8. Exit\n");
+        printf("\n1. Enqueue\n2. Dequeue\n3. Display\n4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                printf("Enter value to insert at end: ");
-                scanf("%d", &value);
-                insertAtEnd(value);
-                break;
-            case 2:
-                printf("Enter value to insert at beginning: ");
-                scanf("%d", &value);
-                insertAtBeginning(value);
-                break;
-            case 3:
                 printf("Enter value to insert: ");
                 scanf("%d", &value);
-                printf("Enter position: ");
-                scanf("%d", &position);
-                insertAtPosition(value, position);
+                enqueue(value);
                 break;
-            case 4:
-                deleteAtBeginning();
+            case 2:
+                dequeue();
                 break;
-            case 5:
-                deleteAtEnd();
-                break;
-            case 6:
-                printf("Enter position to delete: ");
-                scanf("%d", &position);
-                deleteAtPosition(position);
-                break;
-            case 7:
+            case 3:
                 display();
                 break;
-            case 8:
-                printf("Exiting...\n");
+            case 4:
                 exit(0);
             default:
-                printf("Invalid Choice! Try again.\n");
+                printf("Invalid choice!\n");
         }
     }
-
     return 0;
 }
