@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+// Tree node
+struct Node {
+    char data;
+    struct Node *left, *right;
+};
+
+struct Node* createNode(char c) {
+    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+    node->data = c;
+    node->left = node->right = NULL;
+    return node;
+}
+
+// Stack for tree nodes
+struct Node* stack[100];
+int top = -1;
+
+void push(struct Node* n) { stack[++top] = n; }
+struct Node* pop() { return stack[top--]; }
+
+// Build expression tree from postfix
+struct Node* buildTree(char postfix[]) {
+    for (int i = 0; postfix[i] != '\0'; i++) {
+        char c = postfix[i];
+
+        if (isalnum(c)) {                   // operand
+            push(createNode(c));
+        } else {                             // operator
+            struct Node* node = createNode(c);
+            node->right = pop();
+            node->left = pop();
+            push(node);
+        }
+    }
+    return pop(); // root
+}
+
+// Traversals
+void preorder(struct Node* root) {
+    if (root) {
+        printf("%c ", root->data);
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+void inorder(struct Node* root) {
+    if (root) {
+        if (!isalnum(root->data)) printf("(");  // parentheses for operators
+        inorder(root->left);
+        printf("%c", root->data);
+        inorder(root->right);
+        if (!isalnum(root->data)) printf(")");
+    }
+}
+
+// ---------------- Evaluate expression tree ----------------
+int evaluate(struct Node* root) {
+    if (!root) return 0;
+
+    if (isdigit(root->data)) return root->data - '0';
+
+    int left = evaluate(root->left);
+    int right = evaluate(root->right);
+
+    switch(root->data) {
+        case '+': return left + right;
+        case '-': return left - right;
+        case '*': return left * right;
+        case '/': return left / right;
+        case '^': {
+            int res = 1;
+            for (int i=0; i<right; i++) res *= left;
+            return res;
+        }
+    }
+    return 0;
+}
+
+// ---------------- Main ----------------
+int main() {
+    char postfix[100];
+
+    printf("Enter postfix expression: ");
+    scanf("%s", postfix);
+
+    struct Node* root = buildTree(postfix);
+
+    printf("Infix Expression: ");
+    inorder(root);
+    printf("\n");
+
+    printf("Prefix Expression: ");
+    preorder(root);
+    printf("\n");
+
+    printf("Final Result: %d\n", evaluate(root));
+
+    return 0;
+}
